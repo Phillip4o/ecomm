@@ -1,0 +1,41 @@
+index_admin:
+  path: /admin
+  controller: App\Controller\Admin\IndexController::index
+
+# Products
+product_create:
+  path: /admin/product/create
+  controller: App\Controller\Admin\ProductController::create
+
+product_edit:
+  path: /admin/product/update/{id}
+  controller: App\Controller\Admin\ProductController::edit
+
+product_delete:
+  path: /admin/product/delete/{id}
+  controller: App\Controller\Admin\ProductController::delete
+
+product_list:
+  path: /admin/product/list
+  controller: App\Controller\Admin\ProductController::listProducts
+
+product_add_to_category:
+  path: /admin/product/add-to-category/{id}
+  controller: App\Controller\Admin\ProductController::updateProductCategory
+
+# Categories
+category_create:
+  path: /admin/category/create
+  controller: App\Controller\Admin\CategoryController::create
+
+category_edit:
+  path: /admin/category/update/{id}
+  controller: App\Controller\Admin\CategoryController::edit
+
+category_delete:
+  path: /admin/category/delete/{id}
+  controller: App\Controller\Admin\CategoryController::delete
+
+category_list:
+  path: /admin/category/list
+  controller: App\Controller\Admin\CategoryController::index

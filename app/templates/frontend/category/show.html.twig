@@ -1,0 +1,40 @@
+{% extends 'frontend/base/base.html.twig' %}
+
+{% block title %}Hello IndexController!{% endblock %}
+
+{% block body %}
+    <h1>Category</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ category.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ category.name }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ category.url }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Products</h2>
+    <ul>
+        {% for product in category.products %}
+            <li>
+                <h2>{{ product.name }}</h2>
+                <img src="{{ asset(images_dir ~ product.image) }}" alt="{{ product.name }}" width="100" height="100">
+                <p>Price: ${{ product.price }}</p>
+                <a href="{{ path('product_edit', {'id': product.id}) }}">Edit</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ path('index_frontend') }}">back to list</a>
+
+    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
+
+{% endblock %}

@@ -1,0 +1,7 @@
+{{ form_start(form) }}
+{% for category in form.categories %}
+    {{ form_row(category) }}
+{% endfor %}
+
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

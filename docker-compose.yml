@@ -1,0 +1,99 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: ecomm-nginx
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile-nginx
+    volumes:
+      - ./app:/var/www/app
+    ports:
+      - ${WEB_PORT}:80
+    depends_on:
+      - php
+    networks:
+      ecomm:
+
+  php:
+    container_name: ecomm-php
+    build:
+      context: .
+      dockerfile: build/Dockerfile-php
+    volumes:
+      - ./app:/var/www/app
+    depends_on:
+      - db
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      XDEBUG_CONFIG: "idekey=PHPSTORM discover_client_host=true client_port=9001 client_host=host.docker.internal"
+      XDEBUG_MODE: coverage,develop,debug
+      XDEBUG_SESSION: PHPSTORM
+      LOCALES: ${LOCALES}
+    networks:
+      ecomm:
+    user: "${UID}:${GID}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "localhost:host-gateway"
+
+  encore:
+    container_name: ecomm-encore
+    image: node:14-alpine
+    volumes:
+      - ./app:/app
+    ports:
+      - ${ENCORE_DEV_SERVER_PORT}:${ENCORE_DEV_SERVER_PORT}
+    environment:
+      ENCORE_DEV_SERVER_HOST: ${ENCORE_DEV_SERVER_HOST}
+      ENCORE_DEV_SERVER_PORT: ${ENCORE_DEV_SERVER_PORT}
+    depends_on:
+      - php
+      - db
+    working_dir: /app
+    command: [ sh, -c, "yarn install && yarn dev-server --port ${ENCORE_DEV_SERVER_PORT}" ]
+    networks:
+      ecomm:
+    user: "${UID}:${GID}"
+
+  db:
+    container_name: ecomm-db
+    image: postgres:13
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    networks:
+      ecomm:
+    volumes:
+      - epgdata:/var/lib/postgresql/data
+      - ./app:/app
+
+  elasticsearch:
+    container_name: ecomm-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.1
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - elastic:/usr/share/elasticsearch/data
+    networks:
+      ecomm:
+
+  kibana:
+    container_name: ecomm-kibana
+    image: docker.elastic.co/kibana/kibana:7.13.1
+    ports:
+      - "5601:5601"
+    networks:
+      ecomm:
+
+networks:
+  ecomm:
+
+volumes:
+  epgdata:
+  elastic:

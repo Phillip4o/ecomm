@@ -39,8 +39,11 @@
 /app/phpunit.xml
 /phpunit.xml
 
+# InteliJ data
+/.idea/
+
 # Build data
-/build/
+#/build/
 
 # Composer PHAR
 /composer.phar

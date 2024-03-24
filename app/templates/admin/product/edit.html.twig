@@ -1,0 +1,15 @@
+{% extends 'admin/base/base.html.twig' %}
+
+{% block title %}Edit Product{% endblock %}
+
+{% block body %}
+    <h1>Edit Product</h1>
+
+    {{ include('admin/product/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('product_create') }}">Edit</a>
+
+    {{ include('admin/product/_delete_form.html.twig') }}
+
+    <a href="{{ path('product_add_to_category', {'id': product.id}) }}">Add to category</a>
+{% endblock %}

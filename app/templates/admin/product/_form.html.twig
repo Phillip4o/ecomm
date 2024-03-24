@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {% if product|default %}
+        <img src="{{ asset(images_dir ~ product.image) }}" alt="{{ product.name }}">
+    {% endif %}
+    {{ form_row(form.image) }}
+    {{ form_row(form.price) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

@@ -1,0 +1,19 @@
+{% extends 'admin/base/base.html.twig' %}
+
+{% block title %}List Products{% endblock %}
+
+{% block body %}
+    <h1>Product List</h1>
+    <ul>
+        {% for product in products %}
+            <li>
+                <h2>{{ product.name }}</h2>
+                <img src="{{ asset(images_dir ~ product.image) }}" alt="{{ product.name }}" width="100" height="100">
+                <p>Price: ${{ product.price }}</p>
+                <a href="{{ path('product_edit', {'id': product.id}) }}">Edit</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ path('product_create') }}">Create product</a>
+{% endblock %}
