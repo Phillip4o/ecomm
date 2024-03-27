@@ -74,6 +74,9 @@ services:
   elasticsearch:
     container_name: ecomm-elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:7.13.1
+    ports:
+      - "9200:9200"
+      - "9300:9300"
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
