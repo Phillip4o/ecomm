@@ -33,3 +33,14 @@ services:
         arguments: [ "@knp_menu.factory"]
         tags:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
+
+    serializer.normalizer.product_normalizer:
+        class: 'App\Serializer\ProductNormalizer'
+        tags: ['serializer.normalizer']
+
+    App\Controller\Frontend\Category\CategoryController:
+        tags: [ 'controller.service_arguments' ]
+        public: true
+        arguments:
+            - '@fos_elastica.finder.product'
+

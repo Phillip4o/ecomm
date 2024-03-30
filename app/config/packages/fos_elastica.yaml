@@ -2,14 +2,20 @@
 fos_elastica:
     clients:
         default: { url: '%env(ELASTICSEARCH_URL)%' }
+    serializer:
+        callback_class: FOS\ElasticaBundle\Serializer\Callback
+        serializer: serializer
     indexes:
         product:
+            serializer:
+                groups: [elastica]
+                serialize_null: true
             persistence:
-                # the driver can be orm, mongodb or phpcr
                 driver: orm
                 model: App\Entity\Product
             properties:
+                id: {type: integer}
                 name: { type: text }
                 image: { type: text }
                 price: { type: float }
-
+                categories: { type: object, dynamic: true }
