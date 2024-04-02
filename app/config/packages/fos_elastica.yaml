@@ -14,7 +14,7 @@ fos_elastica:
                 driver: orm
                 model: App\Entity\Product
             properties:
-                id: {type: integer}
+                id: { type: integer }
                 name: { type: text }
                 image: { type: text }
                 price: { type: float }

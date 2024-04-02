@@ -9,7 +9,6 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 class ProductNormalizer implements NormalizerInterface
 {
     public function __construct(
-
         private readonly ObjectNormalizer $normalizer,
     ) {
     }

@@ -81,7 +81,11 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('product_list');
     }
 
-    public function updateProductCategory(Request $request, Product $product, EntityManagerInterface $entityManager): Response
+    public function updateProductCategory(
+        Request $request,
+        Product $product,
+        EntityManagerInterface $entityManager
+    ): Response
     {
         $form = $this->createForm(CategoryProductType::class, $product);
         $form->handleRequest($request);

@@ -44,3 +44,9 @@ services:
         arguments:
             - '@fos_elastica.finder.product'
 
+    App\EventListener\ProductListener:
+        tags:
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'preFlush'
+                entity: 'App\Entity\Product'
