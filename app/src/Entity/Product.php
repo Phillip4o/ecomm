@@ -88,6 +88,17 @@ class Product
         return $this->categories;
     }
 
+    /**
+     * @param Collection $categories
+     * @return Product
+     */
+    public function setCategories(Collection $categories): static
+    {
+        $this->categories = $categories;
+
+        return $this;
+    }
+
     public function addCategory(Category $category): static
     {
         if (!$this->categories->contains($category)) {
