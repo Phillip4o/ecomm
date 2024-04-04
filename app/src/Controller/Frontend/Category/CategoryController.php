@@ -3,7 +3,8 @@
 namespace App\Controller\Frontend\Category;
 
 use App\Entity\Category;
-use App\Repository\CategoryRepository;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Terms;
 use FOS\ElasticaBundle\Paginator\FantaPaginatorAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -24,38 +25,23 @@ class CategoryController extends AbstractController
     public function show(
         #[MapEntity(expr: 'repository.findOneByUrl(url)')]
         Category $category,
-        CategoryRepository $categoryRepository,
         Request $request
     ): Response
     {
-        $boolQuery = new \Elastica\Query\BoolQuery();
+        $boolQuery = new BoolQuery();
 
-        $categoryQuery = new \Elastica\Query\Terms('categories.id', [$category->getId()]);
+        $categoryQuery = new Terms('categories.id', [$category->getId()]);
         $boolQuery->addMust($categoryQuery);
 
-        $paginatorAdapter = $this->finder->createRawPaginatorAdapter($boolQuery);
+        $adapter = $this->finder->createRawPaginatorAdapter($boolQuery);
+        $pagerfanta = new Pagerfanta(new FantaPaginatorAdapter($adapter));
 
-        // Create the ElasticaAdapter for Pagerfanta
-        $adapter = new FantaPaginatorAdapter($paginatorAdapter);
-
-        // Create the Pagerfanta instance
-        $pagerfanta = new Pagerfanta($adapter);
-
-        // Set the current page from the request, default to 1
+        $pagerfanta->setMaxPerPage(1);
         $pagerfanta->setCurrentPage($request->query->getInt('page', 1));
-
-        // Set items per page
-        $pagerfanta->setMaxPerPage(1); // Adjust as needed
-
-        // Get the current page of results
-        $currentPageResults = $pagerfanta->getCurrentPageResults();
-
-
-//        dd($currentPageResults);
 
         return $this->render('frontend/category/show.html.twig', [
             'category' => $category,
-            'products' => $currentPageResults,
+            'products' => $pagerfanta->getCurrentPageResults(),
             'pager' => $pagerfanta,
         ]);
     }
