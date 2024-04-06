@@ -24,6 +24,7 @@ services:
       - ./app:/var/www/app
     depends_on:
       - db
+      - redis
     environment:
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
@@ -70,6 +71,12 @@ services:
     volumes:
       - epgdata:/var/lib/postgresql/data
       - ./app:/app
+
+  redis:
+    container_name: ecomm-redis
+    image: redis:6
+    networks:
+      ecomm:
 
   elasticsearch:
     container_name: ecomm-elasticsearch
