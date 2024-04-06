@@ -38,7 +38,7 @@ services:
         class: 'App\Serializer\ProductNormalizer'
         tags: ['serializer.normalizer']
 
-    App\Controller\Frontend\Category\CategoryController:
+    App\Repository\Elastic\ElasticCategoryRepository:
         tags: [ 'controller.service_arguments' ]
         public: true
         arguments:
