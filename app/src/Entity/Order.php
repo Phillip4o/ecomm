@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use App\Enum\DeliveryMethod;
+use App\Enum\OrderStatus;
+use App\Enum\PaymentMethod;
 use App\Repository\OrderRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,8 +21,8 @@ class Order
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $createDate = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    #[ORM\Column(type: "string", enumType: OrderStatus::class)]
+    private OrderStatus $status;
 
     #[ORM\Column(length: 255)]
     private ?string $customerName = null;
@@ -33,8 +36,18 @@ class Order
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $customerAddress = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $paymentMethod = null;
+    #[ORM\Column(type: "string", enumType: PaymentMethod::class)]
+    private PaymentMethod $paymentMethod;
+
+    #[ORM\Column(type: "string", enumType: DeliveryMethod::class)]
+    private DeliveryMethod $deliveryMethod;
+
+    public function __construct()
+    {
+        $this->status = OrderStatus::Pending;
+        $this->paymentMethod = PaymentMethod::Cash;
+        $this->deliveryMethod = DeliveryMethod::Speedy;
+    }
 
     public function getId(): ?int
     {
@@ -53,12 +66,12 @@ class Order
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): OrderStatus
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(OrderStatus $status): static
     {
         $this->status = $status;
 
@@ -113,14 +126,26 @@ class Order
         return $this;
     }
 
-    public function getPaymentMethod(): ?string
+    public function getPaymentMethod(): PaymentMethod
     {
         return $this->paymentMethod;
     }
 
-    public function setPaymentMethod(string $paymentMethod): static
+    public function setPaymentMethod(PaymentMethod $paymentMethod): static
     {
         $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    public function getDeliveryMethod(): DeliveryMethod
+    {
+        return $this->deliveryMethod;
+    }
+
+    public function setDeliveryMethod(DeliveryMethod $deliveryMethod): static
+    {
+        $this->deliveryMethod = $deliveryMethod;
 
         return $this;
     }
