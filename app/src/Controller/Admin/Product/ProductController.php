@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Admin\Product;
 
 use App\Entity\Product;
 use App\Form\CategoryProductType;
 use App\Form\ProductType;
-use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;

@@ -22,13 +22,16 @@ class Product
     private ?string $name = null;
 
     #[Groups(['elastica'])]
+    #[ORM\Column(length: 255, unique: true)]
+    private string $key;
+
+    #[Groups(['elastica'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
     #[Groups(['elastica'])]
     #[ORM\Column]
     private ?float $price = null;
-
 
     #[Groups(['elastica'])]
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'products')]
@@ -52,6 +55,18 @@ class Product
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getKey(): string
+    {
+        return $this->key;
+    }
+
+    public function setKey(string $key): static
+    {
+        $this->key = $key;
 
         return $this;
     }

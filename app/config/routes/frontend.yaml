@@ -3,8 +3,8 @@ index_frontend:
   controller: App\Controller\Frontend\IndexController::index
 
 product_show:
-  path: /product/{product_key}
-  controller: App\Controller\Admin\CategoryController::edit
+  path: /product/{key}
+  controller: App\Controller\Frontend\Product\ProductController::show
 
 category_show:
   path: /{url}
