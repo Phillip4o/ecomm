@@ -1,0 +1,23 @@
+{% extends 'frontend/base/base.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Your Cart</h1>
+        {% if cart.items.count > 0 %}
+            <div class="row mt-4">
+                {% include 'include/cart-items.html.twig' %}
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                {% include 'include/cart-summary.html.twig' %}
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                Your cart is empty. Go to the <a href="{{ path('home') }}">product list</a>.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

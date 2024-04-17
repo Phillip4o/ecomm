@@ -2,6 +2,10 @@ index_frontend:
   path: /
   controller: App\Controller\Frontend\IndexController::index
 
+cart_show:
+  path: /cart
+  controller: App\Controller\Frontend\Cart\CartController::index
+
 product_show:
   path: /product/{key}
   controller: App\Controller\Frontend\Product\ProductController::show
