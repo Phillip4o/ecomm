@@ -41,7 +41,7 @@
 
 # InteliJ data
 /.idea/
-/.env/
+/.env
 /app/.env
 
 # Build data
