@@ -18,15 +18,15 @@ class CategoryProductType extends AbstractType
     {
         $builder
             ->add('categories', EntityType::class, [
-            'class' => Category::class,
-            'mapped' => true,
-            'multiple' => true,
-            'expanded' => true,
-            'by_reference' => false,
-            'choice_label' => function (Category $category) {
-                return $category->getName();
-            },
-        ])
+                'class' => Category::class,
+                'mapped' => true,
+                'multiple' => true,
+                'expanded' => true,
+                'by_reference' => false,
+                'choice_label' => function (Category $category) {
+                    return $category->getName();
+                },
+            ])
             ->addEventListener(
                 FormEvents::SUBMIT,
                 [$this, 'submit']
